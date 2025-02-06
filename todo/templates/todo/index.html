@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'todo/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Task</button>
+        </form>
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    <form method="POST" action="{% url 'complete_task' task.id %}" class="task-form">
+                        {% csrf_token %}
+                        <button type="submit" class="checkbox">
+                            {% if task.completed %}
+                                &#x25A3; <!-- Закрашенный квадрат -->
+                            {% else %}
+                                &#x25A1; <!-- Пустой квадрат -->
+                            {% endif %}
+                        </button>
+                        <span class="task-title">{{ task.title|truncatechars:100 }}</span>
+                    </form>
+                    <div class="task-actions">
+                        <a href="{% url 'edit_task' task.id %}">Edit</a>
+                        <a href="{% url 'delete_task' task.id %}">Delete</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Task</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'todo/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+    <h1>Delete Task</h1>
+    <p>Are you sure you want to delete "{{ task.title }}"?</p>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Yes, delete</button>
+    </form>
+    <a href="/">No, go back</a>
+</div>
+</body>
+</html>
